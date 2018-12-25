@@ -21,7 +21,7 @@ WiFiClient client;
 Adafruit_MQTT_Client mqtt(&client, AIO_SERVER, AIO_SERVERPORT, AIO_USERNAME, AIO_KEY);
 
 
-Adafruit_MQTT_Subscribe onoffbutton = Adafruit_MQTT_Subscribe(&mqtt, AIO_USERNAME "/feeds/onoff");
+Adafruit_MQTT_Subscribe onoffbutton = Adafruit_MQTT_Subscribe(&mqtt, AIO_USERNAME "/feeds/project");
 
 
 void MQTT_connect();
@@ -53,7 +53,7 @@ void setup() {
 uint32_t x=0;
 
 void loop() {
- int val=0;
+ int val;
   MQTT_connect();
 
 
@@ -63,7 +63,8 @@ void loop() {
       Serial.print(F("Got: "));
       Serial.println((char *)onoffbutton.lastread);\
       uint16_t val = atoi((char *)onoffbutton.lastread);
-      digitalWrite(D1,val);
+      if(val==1)
+        digitalWrite(D1,val);
     }
   }
 
